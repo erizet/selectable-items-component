@@ -1,7 +1,7 @@
 # Selectable items
 A simple web component to mark selected elements in a list.
 
-##Usage
+## Usage
 ```
             <selectable-items selector="a" selection-class="selected">
                 <a href="#" role="button">One</a>
