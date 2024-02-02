@@ -10,45 +10,27 @@
     <script type="module" src="selectable-items.js"></script>
 
     <style>
-        a.active {
+        a.selected {
             border-color: chocolate;
             border-width: thick;
         }
-    </style>
-
-    <script type="text/javascript">
-        function remove() {
-            const els = document.querySelectorAll("selectable-items");
-            els.forEach(element => {
-                element.remove();
-            });
+        a {
+            width: 20%;
+            margin: 10px;
         }
-    </script>
+    </style>
 </head>
 
 <body>
-    <div>
-        <selectable-items selector="a" selection-class="active">
-            <aside>
-                <nav>
-                    <ul>
-                        <li>
-                            <a href="#" role="button">Testar tag</a>
-                        </li>
-                        <li>
-                            <a href="#" role="button">Två</a>
-                        </li>
-                        <li>
-                            <a href="#" role="button">Treans val</a>
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
-        </selectable-items>
-    </div>
-    <hr />
-    <button onclick="remove()">Ta bort komponent</button>
-
+    <main>
+        <section>
+            <selectable-items selector="a" selection-class="selected">
+                <a href="#" role="button">One</a>
+                <a href="#" role="button">Two</a>
+                <a href="#" role="button">Three</a>
+            </selectable-items>
+        </section>
+    </main>
 </body>
 
 </html>
