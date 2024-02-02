@@ -33,7 +33,9 @@
             // connect component
             connectedCallback() {
                 addEventListener('DOMContentLoaded', () => {
-                    this.selectables = this.querySelectorAll("a");
+                    const selector = this.getAttribute("selector") ?? "a";
+
+                    this.selectables = this.querySelectorAll(selector) ?? [];
                     console.debug(`Found ${this.selectables.length} menu items.`);
 
                     this.#addClickHandler();
@@ -42,12 +44,9 @@
                 });
             }
 
-            /**
-             * @param {HTMLAnchorElement[]} anchors Anchors to add handlers to
-             **/
             #addClickHandler() {
-                this.selectables.forEach(a => {
-                    a.addEventListener("click", e => this.#itemClicked(e));
+                this.selectables?.forEach(x => {
+                    x.addEventListener("click", e => this.#itemClicked(e));
                 });
             }
 
@@ -70,9 +69,8 @@
 
         SelectableItems.register();
 
-
         function remove() {
-            const els = document.querySelectorAll("my-menu");
+            const els = document.querySelectorAll("selectable-items");
             els.forEach(element => {
                 element.remove();
             });
@@ -82,7 +80,7 @@
 
 <body>
     <div>
-        <selectable-items selection-class="active">
+        <selectable-items selector="a" selection-class="active">
             <aside>
                 <nav>
                     <ul>
