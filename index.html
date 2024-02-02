@@ -7,6 +7,14 @@
     <title>Web component test</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+
+    <style>
+        a.active {
+            border-color: chocolate;
+            border-width: thick;
+        }
+    </style>
+
     <script type="text/javascript">
 
         class SelectableItems extends HTMLElement {
@@ -16,6 +24,8 @@
                 }
             }
 
+            selectionClass = "active";
+
             constructor() {
                 super();
             }
@@ -23,40 +33,39 @@
             // connect component
             connectedCallback() {
                 addEventListener('DOMContentLoaded', () => {
-                    this.anchors = this.querySelectorAll("a");
-                    console.debug(`Found ${this.anchors.length} menu items.`);
+                    this.selectables = this.querySelectorAll("a");
+                    console.debug(`Found ${this.selectables.length} menu items.`);
 
                     this.#addClickHandler();
+
+                    this.selectionClass = this.getAttribute("selection-class") || "active";
                 });
             }
 
             /**
-             * @param {HTMLAnchorElement[]} anchors Anchors to att handlers to
+             * @param {HTMLAnchorElement[]} anchors Anchors to add handlers to
              **/
             #addClickHandler() {
-                this.anchors.forEach(a => {
-                    a.addEventListener("click", e => this.#menuItemClicked(e));
+                this.selectables.forEach(a => {
+                    a.addEventListener("click", e => this.#itemClicked(e));
                 });
             }
-
 
             /**
              * @param {MouseEvent} event
              **/
-            #menuItemClicked(event) {
-                this.anchors.forEach(a => {
-                    a.classList.remove('active');
+            #itemClicked(event) {
+                this.selectables.forEach(a => {
+                    a.classList.remove(this.selectionClass);
 
                     if (a == event.target)
-                        a.classList.add('active');
+                        a.classList.add(this.selectionClass);
                 });
             }
 
-
             disconnectedCallback() {
-                console.log("disconnected");
+                console.debug("disconnected");
             }
-
         }
 
         SelectableItems.register();
@@ -73,7 +82,7 @@
 
 <body>
     <div>
-        <selectable-items>
+        <selectable-items selection-class="active">
             <aside>
                 <nav>
                     <ul>
